@@ -9,7 +9,7 @@ $ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh
 
 $ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
 
-$ stow zsh ssh vim git
+$ stow zsh ssh vim git alacritty
 
 $ source ~/.zshrc
 
