@@ -17,6 +17,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'tpope/vim-fugitive'
 Plugin 'chr4/nginx.vim'
 Plugin 'stephpy/vim-yaml'
+Plugin 'cespare/vim-toml'
 
 call vundle#end()            " required
 filetype plugin on    " required
