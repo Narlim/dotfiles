@@ -40,8 +40,8 @@ add `--enable-features=UseOzonePlatform --ozone-platform=wayland` in `Exec`.
 
 ### Theme
 
-[catppuccin]('https://github.com/catppuccin/catppuccin')
+[catppuccin](https://github.com/catppuccin/catppuccin)
 
 ### wiki
 
-[hyprland]('https://wiki.hyprland.org/')
+[hyprland](https://wiki.hyprland.org/)
