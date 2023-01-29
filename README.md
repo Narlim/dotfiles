@@ -35,8 +35,10 @@ stow dunst hypr kitty rofi swappy swaylock waybar environment.d
 
 ### Wayland known issues
 
-for apps based system electron with blurred interface, use some env variables in `electrons-flags.conf` , and electron build inside the apps should edit `.desktop` files,
+- for apps based system electron with blurred interface, use some env variables in `electrons-flags.conf` , and electron build inside the apps should edit `.desktop` files,
 add `--enable-features=UseOzonePlatform --ozone-platform=wayland` in `Exec`.
+
+- for some qt apps like may have scaling problem, the `QT_AUTO_SCREEN_SCALE_FACTOR=0,QT_SCALE_FACTOR=1.5` is useful. The env variables can make telegram GUI too big, use the `Exec=env -u QT_SCALE_FACTOR /usr/bin/telegram-desktop -- %u` to avoid it. 
 
 ### Theme
 
