@@ -1,0 +1,42 @@
+#!/bin/sh
+
+cd ~
+
+# Log WLR errors and logs to the hyprland log. Recommended
+# export HYPRLAND_LOG_WLR=1
+
+# Tell XWayland to use a cursor theme
+# export XCURSOR_THEME=Bibata-Modern-Classic
+
+# Set a cursor size
+# export XCURSOR_SIZE=24
+
+# path
+export PATH="${HOME}/.pyenv/shims:${HOME}/.local/bin:${PATH}"
+
+# Example IME Support: fcitx
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export SDL_IM_MODULE=fcitx
+export GLFW_IM_MODULE=ibus
+
+# firefox
+export MOZ_ENABLE_WAYLAND=1
+
+# qt
+export QT_QPA_PLATFORM=wayland
+export QT_AUTO_SCREEN_SCALE_FACTOR=0
+export QT_SCALE_FACTOR=1.5
+
+# vaapi
+export LIBVA_DRIVER_NAME=iHD
+
+# xdg
+export XDG_CONFIG_HOME="${HOME}/.config"
+
+# http proxy
+export HTTP_PROXY=http://127.0.0.1:8118/
+export HTTPS_PROXY=http://127.0.0.1:8118/
+
+exec Hyprland

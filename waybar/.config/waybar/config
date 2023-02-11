@@ -6,8 +6,8 @@
     "margin-bottom": 0,
     "margin-right": 10,
     "spacing": 5, // Gaps between modules (4px)
-    "modules-left": ["custom/launcher", "cpu", "memory", "wlr/workspaces", "custom/weather"],
-    "modules-center": ["custom/spotify"],
+    "modules-left": ["custom/launcher", "cpu", "memory", "wlr/workspaces", "custom/weather", "custom/cava-internal"],
+    "modules-center": ["custom/spotify", "custom/rhythmbox"],
     "modules-right": ["tray", "custom/updates", "bluetooth", "backlight", "pulseaudio", "network", "battery", "clock", "custom/power-menu"],
 
     "wlr/workspaces": {
@@ -117,13 +117,22 @@
       "on-click": "xdg-open https://weather.com/en-IN/weather/today/l/49ca981afcf306a485305e843eaba9f6acbab136402403a8bbb4296e3678001b" 
     },   
 
-   "custom/spotify": {
-    "exec": "python3 ~/.config/waybar/scripts/mediaplayer.py --player spotify",
-    "format": "{}  ",
-    "return-type": "json",
-    "on-click": "playerctl play-pause -p spotify",
-    "on-double-click-right": "playerctl next",
-    "on-scroll-down": "playerctl previous",
+    "custom/spotify": {
+      "exec": "python3 ~/.config/waybar/scripts/mediaplayer.py --player spotify",
+      "format": "{}  ",
+      "return-type": "json",
+      "on-click": "playerctl play-pause -p spotify",
+      "on-double-click-right": "playerctl next",
+      "on-scroll-down": "playerctl previous",
+    },
+
+    "custom/rhythmbox": {
+      "exec": "python3 ~/.config/waybar/scripts/mediaplayer.py --player rhythmbox",
+      "format": "{}  ",
+      "return-type": "json",
+      "on-click": "playerctl play-pause -p rhythmbox",
+      "on-double-click-right": "playerctl next",
+      "on-scroll-down": "playerctl previous",
     },
 
     "custom/power-menu": {
@@ -144,9 +153,9 @@
 		"signal": 8
     },
 
-	"custom/cava": {
-	    "return-type": "{}",
-		"exec": "/usr/bin/cava",
+	"custom/cava-internal": {
+		"exec": "cava-internal",
+		"tooltip": false
 	},
 
     "keyboard-state": {
