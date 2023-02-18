@@ -6,7 +6,7 @@
     "margin-bottom": 0,
     "margin-right": 10,
     "spacing": 5, // Gaps between modules (4px)
-    "modules-left": ["custom/launcher", "cpu", "memory", "wlr/workspaces", "custom/weather", "custom/cava-internal"],
+    "modules-left": ["custom/launcher", "cpu", "wlr/workspaces", "custom/weather", "custom/cava-internal", "custom/show-lyric-spotify"],
     "modules-center": ["custom/spotify", "custom/rhythmbox"],
     "modules-right": ["tray", "custom/updates", "bluetooth", "backlight", "pulseaudio", "network", "battery", "clock", "custom/power-menu"],
 
@@ -42,7 +42,7 @@
 
     "cpu": {
       "interval": 10,
-      "format": " {}%",
+      "format": " {usage:2}%",
       "max-length": 10,
       "on-click": "",
     },
@@ -124,6 +124,7 @@
       "on-click": "playerctl play-pause -p spotify",
       "on-double-click-right": "playerctl next",
       "on-scroll-down": "playerctl previous",
+	  "max-length": 25,
     },
 
     "custom/rhythmbox": {
@@ -133,6 +134,7 @@
       "on-click": "playerctl play-pause -p rhythmbox",
       "on-double-click-right": "playerctl next",
       "on-scroll-down": "playerctl previous",
+	  "max-length": 25,
     },
 
     "custom/power-menu": {
@@ -156,6 +158,16 @@
 	"custom/cava-internal": {
 		"exec": "cava-internal",
 		"tooltip": false
+	},
+
+	"custom/show-lyric-spotify": {
+		"exec": "python3 ~/.config/waybar/scripts/show-lyric.py --player spotify",
+		"tooltip": false,
+	},
+
+	"custom/show-lyric-rhythmbox": {
+		"exec": "python3 ~/.config/waybar/scripts/show-lyric.py --player rhythmbox",
+		"tooltip": false,
 	},
 
     "keyboard-state": {
