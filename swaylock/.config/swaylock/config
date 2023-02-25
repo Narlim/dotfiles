@@ -1,24 +1,24 @@
 ignore-empty-password
 font=JetBrains Mono NL Thin
 
-clock
-timestr=%R
-datestr=%a %B %e
+# clock
+# timestr=%R
+# datestr=%a %B %e
 
-image=~/.config/hypr/wallpapers/night.jpg
+image=~/.config/hypr/wallpapers/city.jpg
 
-fade-in=5
+# fade-in=5
 
-effect-blur=95x2
+# effect-blur=95x2
 
 indicator-idle-visible
-indicator-radius=150
+indicator-radius=100
 indicator-thickness=10
 indicator-caps-lock
 
-grace=5
-grace-no-mouse
-grace-no-touch
+# grace=5
+# grace-no-mouse
+# grace-no-touch
 
 key-hl-color=880033ff
 

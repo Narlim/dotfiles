@@ -5,8 +5,8 @@
     "margin-left": 10,
     "margin-bottom": 0,
     "margin-right": 10,
-    "spacing": 5, // Gaps between modules (4px)
-    "modules-left": ["custom/launcher", "cpu", "wlr/workspaces", "custom/weather", "custom/cava-internal", "custom/show-lyric-spotify"],
+    "spacing": 4, // Gaps between modules (4px)
+    "modules-left": ["custom/launcher", "cpu", "wlr/workspaces", "custom/weather", "custom/cava-internal", "custom/show-lyric-spotify", "custom/show-lyric-rhythmbox"],
     "modules-center": ["custom/spotify", "custom/rhythmbox"],
     "modules-right": ["tray", "custom/updates", "bluetooth", "backlight", "pulseaudio", "network", "battery", "clock", "custom/power-menu"],
 
@@ -31,7 +31,7 @@
 	
     "tray": {
         "spacing": 12,
-		"icon-size": 20,
+		"icon-size": 18,
     },
 
     "clock": {
@@ -163,11 +163,13 @@
 	"custom/show-lyric-spotify": {
 		"exec": "python3 ~/.config/waybar/scripts/show-lyric.py --player spotify",
 		"tooltip": false,
+        "max-length": 40,
 	},
 
 	"custom/show-lyric-rhythmbox": {
 		"exec": "python3 ~/.config/waybar/scripts/show-lyric.py --player rhythmbox",
 		"tooltip": false,
+        "max-length": 40,
 	},
 
     "keyboard-state": {

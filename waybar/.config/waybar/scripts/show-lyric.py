@@ -1,24 +1,33 @@
+#!/usr/bin/env python3
+import argparse
+import logging
 import sys
+import signal
+import gi
+import json
 import requests
 import time
-import gi
-import argparse
 import threading
 gi.require_version('Playerctl', '2.0')
-from gi.repository import Playerctl
+from gi.repository import Playerctl, GLib
 
-# personal netease music api
+logger = logging.getLogger(__name__)
+logging.getLogger("urllib3").setLevel(logging.WARNING)
+
+
 URL = "https://netease-cloud-music-api-zeta-vert.vercel.app"
-# flag to control change lyric
-global_track_info = ''
 
+
+
+class GlobalVariable():
+    global_track_info = ''
+    
+    def __init__(self) -> None:
+        pass    
+    
 
 def download_lyric(track_info):
-    """
-    dowload lyric meanwhile change global_track_info to the new one.
-    """
-    global global_track_info
-    global_track_info = track_info
+    logger.info('Download lyric')
     payload = {'keywords': track_info}
     resp = requests.get(url=f"{URL}/search", params=payload)
     id = resp.json()['result']['songs'][0]['id']
@@ -28,16 +37,8 @@ def download_lyric(track_info):
     return lyric
 
 
-def get_track_info(player):
-    track_info = player.get_artist() + ' ' + player.get_title()
-    return track_info
-
-
 def get_formatted_position(player):
-    """
-    get player's formatted position, to match lyric timeline(
-    like: 01:01 means process 1 minute 1 second from music start)
-    """
+    logger.info('format position')
     position = player.get_position()
     seconds = position // 1000000
     str_min = str(seconds // 60)
@@ -54,63 +55,108 @@ def get_formatted_position(player):
     return formatted_time
 
 
-def show_lyric(track_info, lyric, player):
-    """
-    print lyric line by line, if new track_info is different from 
-    global_track_info, break the infinite loop.
-    """
-    global global_track_info
+def on_show_lyric(player, metadata, manager, global_track_info, lyric):
+    logger.info('show lyric')
     lyric_dic = { item[1:6]: item.split(']')[1] \
         for item in lyric.split('\n') if item != ''}
-   
-    now_position = get_formatted_position(player)
     while True:
+        track_info = player.get_artist() + ' ' + player.get_title()
+        now_position = get_formatted_position(player)
         if global_track_info != track_info:
+            sys.stdout.write('\n')
+            sys.stdout.flush()
             break
         oneline_lyric = lyric_dic.get(now_position)
         if oneline_lyric is not None:
             sys.stdout.write(oneline_lyric + '\n')
             sys.stdout.flush()
-            time.sleep(0.1)
-            now_position = get_formatted_position(player)
+            time.sleep(1.0)
         else:
-            time.sleep(0.1)
-            now_position = get_formatted_position(player)
+            time.sleep(0.5)
+        
 
-
-def start_thread(track_info, lyric, player):
-    """
-    new thread to run show_lyric function.
-    """
-    x = threading.Thread(target=show_lyric, args=(track_info, lyric, player), daemon=True)
+def thread_start(player, metadata, manager):
+    logger.info('thread start')
+    track_info = player.get_artist() + ' ' + player.get_title()
+    lyric = download_lyric(track_info)
+    GlobalVariable.global_track_info = track_info
+    global_track_info = GlobalVariable.global_track_info
+    x = threading.Thread(target=on_show_lyric, \
+                         args=(player, metadata, manager, global_track_info, lyric), daemon=True)
     x.start()
+
+
+
+def on_player_appeared(manager, player, selected_player=None):
+    if player is not None and (selected_player is None or player.name == selected_player):
+        init_player(manager, player)
+    else:
+        logger.debug("New player appeared, but it's not the selected player, skipping")
+
+
+
+def init_player(manager, name):
+    logger.debug('Initialize player: {player}'.format(player=name.name))
+    player = Playerctl.Player.new_from_name(name)
+    player.connect('metadata', thread_start, manager)
+    manager.manage_player(player)
+    thread_start(player, player.props.metadata, manager)
+
+
+def signal_handler(sig, frame):
+    logger.debug('Received signal to stop, exiting')
+    sys.stdout.write('\n')
+    sys.stdout.flush()
+    # loop.quit()
+    sys.exit(0)
+
 
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
+
+    # Increase verbosity with every occurrence of -v
     parser.add_argument('-v', '--verbose', action='count', default=0)
+
+    # Define for which player we're listening
     parser.add_argument('--player')
+
     return parser.parse_args()
 
 
+def main():
+    arguments = parse_arguments()
+
+    # Initialize logging
+    logging.basicConfig(stream=sys.stderr, level=logging.DEBUG,
+                        format='%(name)s %(levelname)s %(message)s')
+
+    # Logging is set by default to WARN and higher.
+    # With every occurrence of -v it's lowered by one
+    logger.setLevel(max((3 - arguments.verbose) * 10, 0))
+
+    # Log the sent command line arguments
+    logger.debug('Arguments received {}'.format(vars(arguments)))
+
+    manager = Playerctl.PlayerManager()
+    loop = GLib.MainLoop()
+
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+    signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
+    for player in manager.props.player_names:
+        if arguments.player is not None and arguments.player != player.name:
+            logger.debug('{player} is not the filtered player, skipping it'
+                         .format(player=player.name)
+                         )
+            continue
+
+        init_player(manager, player)
+
+    loop.run()
+    
+
+
 if __name__ == '__main__':
-    while True:
-        arguments = parse_arguments()
-        manager = Playerctl.PlayerManager()
-        for player_name in manager.props.player_names:
-            if arguments.player is not None and arguments.player != player_name.name:
-                continue
-        try:
-            player = Playerctl.Player.new_from_name(player_name)
-            track_info = get_track_info(player)
-            # compare global_track_info with new track_info, if has different download the new lyric.
-            if global_track_info != track_info or global_track_info == '':
-                lyric = download_lyric(track_info)
-                start_thread(track_info, lyric, player)
-            else:
-                time.sleep(0.2)
-        # incase no player.
-        except NameError:
-            time.sleep(1.0)
-        except KeyboardInterrupt:
-            break
+    main()
