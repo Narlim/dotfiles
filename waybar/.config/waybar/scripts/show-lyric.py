@@ -60,7 +60,11 @@ def on_show_lyric(player, metadata, manager, global_track_info, lyric):
     lyric_dic = { item[1:6]: item.split(']')[1] \
         for item in lyric.split('\n') if item != ''}
     while True:
-        track_info = player.get_artist() + ' ' + player.get_title()
+        try:
+            track_info = player.get_artist() + ' ' + player.get_title()
+        except:
+            logger.error('get some error')
+            break
         now_position = get_formatted_position(player)
         if global_track_info != track_info:
             sys.stdout.write('\n')
@@ -72,19 +76,23 @@ def on_show_lyric(player, metadata, manager, global_track_info, lyric):
             sys.stdout.flush()
             time.sleep(1.0)
         else:
-            time.sleep(0.5)
+            time.sleep(1.0)
         
 
 def thread_start(player, metadata, manager):
     logger.info('thread start')
-    track_info = player.get_artist() + ' ' + player.get_title()
-    lyric = download_lyric(track_info)
-    GlobalVariable.global_track_info = track_info
-    global_track_info = GlobalVariable.global_track_info
+    try:
+        track_info = player.get_artist() + ' ' + player.get_title()
+        lyric = download_lyric(track_info)
+        GlobalVariable.global_track_info = track_info
+        global_track_info = GlobalVariable.global_track_info
+    except:
+        lyric = ''
+        global_track_info = ''
+        logger.error('get some variable errors')
     x = threading.Thread(target=on_show_lyric, \
                          args=(player, metadata, manager, global_track_info, lyric), daemon=True)
     x.start()
-
 
 
 def on_player_appeared(manager, player, selected_player=None):
@@ -93,6 +101,11 @@ def on_player_appeared(manager, player, selected_player=None):
     else:
         logger.debug("New player appeared, but it's not the selected player, skipping")
 
+
+def on_player_vanished(manager, player):
+    logger.info('Player has vanished')
+    sys.stdout.write('\n')
+    sys.stdout.flush()
 
 
 def init_player(manager, name):
@@ -139,7 +152,11 @@ def main():
     logger.debug('Arguments received {}'.format(vars(arguments)))
 
     manager = Playerctl.PlayerManager()
+
     loop = GLib.MainLoop()
+
+    manager.connect('name-appeared', lambda *args: on_player_appeared(*args, arguments.player))
+    manager.connect('player-vanished', on_player_vanished)
 
     signal.signal(signal.SIGINT, signal_handler)
     signal.signal(signal.SIGTERM, signal_handler)

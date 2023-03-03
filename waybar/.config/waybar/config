@@ -1,13 +1,13 @@
 {
     "height": 30, // Waybar height (to be removed for auto height)
-	"output": ["DP-1","eDP-1"],
+	"output": ["DP-1", "eDP-1"],
     "margin-top": 6,
     "margin-left": 10,
     "margin-bottom": 0,
     "margin-right": 10,
     "spacing": 4, // Gaps between modules (4px)
-    "modules-left": ["custom/launcher", "cpu", "wlr/workspaces", "custom/weather", "custom/cava-internal", "custom/show-lyric-spotify", "custom/show-lyric-rhythmbox"],
-    "modules-center": ["custom/spotify", "custom/rhythmbox"],
+    "modules-left": ["custom/launcher", "cpu", "wlr/workspaces", "custom/weather", "custom/cava-internal", "custom/show-lyric-spotify", "custom/show-lyric-tauon"],
+    "modules-center": ["custom/spotify", "custom/tauon"],
     "modules-right": ["tray", "custom/updates", "bluetooth", "backlight", "pulseaudio", "network", "battery", "clock", "custom/power-menu"],
 
     "wlr/workspaces": {
@@ -127,11 +127,11 @@
 	  "max-length": 25,
     },
 
-    "custom/rhythmbox": {
-      "exec": "python3 ~/.config/waybar/scripts/mediaplayer.py --player rhythmbox",
+    "custom/tauon": {
+      "exec": "python3 ~/.config/waybar/scripts/mediaplayer.py --player tauon",
       "format": "{}  ",
       "return-type": "json",
-      "on-click": "playerctl play-pause -p rhythmbox",
+      "on-click": "playerctl play-pause -p tauon",
       "on-double-click-right": "playerctl next",
       "on-scroll-down": "playerctl previous",
 	  "max-length": 25,
@@ -166,8 +166,8 @@
         "max-length": 40,
 	},
 
-	"custom/show-lyric-rhythmbox": {
-		"exec": "python3 ~/.config/waybar/scripts/show-lyric.py --player rhythmbox",
+	"custom/show-lyric-tauon": {
+		"exec": "python3 ~/.config/waybar/scripts/show-lyric.py --player tauon",
 		"tooltip": false,
         "max-length": 40,
 	},
