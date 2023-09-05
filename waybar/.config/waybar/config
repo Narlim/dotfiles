@@ -1,25 +1,24 @@
 {
     "height": 30, // Waybar height (to be removed for auto height)
-	"output": ["DP-1", "eDP-1"],
+	"output": ["DP-3", "eDP-1"],
     "margin-top": 6,
     "margin-left": 10,
     "margin-bottom": 0,
     "margin-right": 10,
     "spacing": 4, // Gaps between modules (4px)
-    "modules-left": ["custom/launcher", "cpu", "wlr/workspaces", "custom/weather", "custom/show-lyric-spotify", "custom/show-lyric-tauon"],
+    "modules-left": ["custom/launcher", "cpu", "hyprland/workspaces", "custom/weather", "custom/show-lyric-spotify", "custom/show-lyric-tauon"],
     "modules-center": ["custom/spotify", "custom/tauon"],
     "modules-right": ["tray", "custom/updates", "bluetooth", "backlight", "pulseaudio", "network", "battery", "clock", "custom/power-menu"],
 
-    "wlr/workspaces": {
+    "hyprland/workspaces": {
       "format": "{icon}",
-      "on-click": "activate",
+      //"on-click": "activate",
       "format-icons": {
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": "",
-        "urgent": "",
+        "1": "󰲠",
+        "2": "󰲢",
+        "3": "󰲤",
+        "4": "󰲦",
+        "5": "󰲨",
         "active": "",
         "default": ""
       }
@@ -151,7 +150,7 @@
         "format": " {}",
         "exec": "checkupdates | wc -l",
         "exec-if": "[[ $(checkupdates | wc -l) != 0 ]]",
-        "interval": 60,
+        "interval": 300,
 		"signal": 8
     },
 
