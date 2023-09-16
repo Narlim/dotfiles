@@ -1,7 +1,6 @@
 * {
   /* `otf-font-awesome` is required to be installed for icons */
-  /*font-family: JetBrainsMono Nerd Font;*/
-  /*font-size: 17px;*/
+  /*font-family: JetBrainsMono Nerd Font;*/ /*font-size: 17px;*/
   font-family: JetBrainsMono Nerd Font; 
   font-style: italic;
   /*font-weight: lighter;*/
@@ -16,7 +15,6 @@ window#waybar {
   transition-duration: 0.5s;
   border-top: 8px transparent;
   border-radius: 8px;
-  transition-duration: 0.5s;
   margin: 16px 16px;
 }
 
@@ -40,7 +38,7 @@ window#waybar.hidden {
 }
 
 #workspaces button.active {
-  color: #6a92d7;
+  color: #3aa7f1;
 }
 
 #workspaces button.urgent {
@@ -54,6 +52,7 @@ window#waybar.hidden {
   color: #64727d;
 }
 
+#custom-wireguard,
 #custom-updates,
 #keyboard-state,
 #clock,
@@ -100,7 +99,7 @@ window#waybar.hidden {
 }
 
 #cpu {
-  color: #fb958b;
+  color: #24b3f8;
   background-color: #1f2530;
 }
 
@@ -120,7 +119,7 @@ window#waybar.hidden {
   background-color: #1b242b;
   color: #6a92d7;
   border-radius: 7.5px;
-  padding: 0 3px;
+  padding: 0 0px;
 }
 
 #custom-weather.severe {
@@ -165,28 +164,29 @@ window#waybar.hidden {
 }
 
 #pulseaudio {
-  color: #7d9bba;
+  color: #7987dd;
 }
 
 #backlight {
   /* color: #EBCB8B; */
-  color: #8fbcbb;
+  color: #5e95e6;
 }
 
 #clock {
-  color: #c8d2e0;
+  color: #e450bb;
   /* background-color: #14141e; */
 }
 
 #battery {
-  color: #c0caf5;
+  color: #c95ec4;
+  /* color: #c0caf5; */
   /* background-color: #90b1b1; */
 }
 
 #battery.charging,
 #battery.full,
 #battery.plugged {
-  color: #26a65b;
+  color: #c95ec4;
   /* background-color: #26a65b; */
 }
 
@@ -215,7 +215,7 @@ label:focus {
 }
 
 #bluetooth {
-  color: #707d9d;
+  color: #44a2ee;
 }
 
 #bluetooth.disconnected {
@@ -223,7 +223,7 @@ label:focus {
 }
 
 #network {
-  color: #b48ead;
+  color: #9479d5;
 }
 
 #network.disconnected {
@@ -245,7 +245,7 @@ label:focus {
 }
 
 #custom-updates {
-  color: #A49A5A;
+  color: #29b0f7;
 }
 
 #temperature {
@@ -317,6 +317,14 @@ label:focus {
   margin: 0 4px;
   /* background-color: #1db954; */
   color: #abb2bf;
+}
+
+#custom-wireguard {
+  color: #af6bcc;
+}
+
+#custom-wireguard.disconnected {
+  color: #f53c3c;
 }
 
 #keyboard-state > label.locked {

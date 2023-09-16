@@ -1,14 +1,14 @@
 {
     "height": 30, // Waybar height (to be removed for auto height)
 	"output": ["DP-3", "eDP-1"],
-    "margin-top": 6,
-    "margin-left": 10,
+    "margin-top": 5,
+    "margin-left": 8,
     "margin-bottom": 0,
-    "margin-right": 10,
+    "margin-right": 8,
     "spacing": 4, // Gaps between modules (4px)
-    "modules-left": ["custom/launcher", "cpu", "hyprland/workspaces", "custom/weather", "custom/show-lyric-spotify", "custom/show-lyric-tauon"],
+    "modules-left": ["custom/launcher", "cpu", "hyprland/workspaces", "custom/show-lyric-spotify", "custom/show-lyric-tauon"],
     "modules-center": ["custom/spotify", "custom/tauon"],
-    "modules-right": ["tray", "custom/updates", "bluetooth", "backlight", "pulseaudio", "network", "battery", "clock", "custom/power-menu"],
+    "modules-right": ["tray", "custom/updates", "bluetooth", "backlight", "pulseaudio", "network", "custom/wireguard", "battery", "clock", "custom/power-menu"],
 
     "hyprland/workspaces": {
       "format": "{icon}",
@@ -34,8 +34,8 @@
     },
 
     "clock": {
-        "format": "<span color='#bf616a'> </span>{:%a %b %d}",
-        "format-alt": "<span color='#bf616a'> </span>{:%I:%M %p}",
+        "format": "<span color='#e450bb'> </span>{:%a %b %d}",
+        "format-alt": "<span color='#e450bb'> </span>{:%I:%M %p}",
         "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
     },
 
@@ -109,16 +109,16 @@
       "format-icons": [" ", " ", " ", " ", " "],
     },
 
-    "custom/weather": {
-      "exec": "python3 ~/.config/waybar/scripts/weather.py",
-      "restart-interval": 100,
-      "return-type": "json",
-      "on-click": "xdg-open https://weather.com/en-IN/weather/today/l/49ca981afcf306a485305e843eaba9f6acbab136402403a8bbb4296e3678001b" 
-    },   
+//     "custom/weather": {
+//       "exec": "python3 ~/.config/waybar/scripts/weather.py",
+//       "restart-interval": 100,
+//      "return-type": "json",
+//      "on-click": "xdg-open https://weather.com/en-IN/weather/today/l/49ca981afcf306a485305e843eaba9f6acbab136402403a8bbb4296e3678001b" 
+//    },   
 
     "custom/spotify": {
       "exec": "python3 ~/.config/waybar/scripts/mediaplayer.py --player spotify",
-      "format": "{}  ",
+      "format": "<span color='#46a1ed'>{}  </span>",
       "return-type": "json",
       "on-click": "playerctl play-pause -p spotify",
       "on-double-click-right": "playerctl next",
@@ -137,12 +137,12 @@
     },
 
     "custom/power-menu": {
-        "format": " <span color='#6a92d7'>⏻ </span>",
+        "format": " <span color='#ff42b3'>⏻ </span>",
         "on-click": "bash ~/.config/waybar/scripts/power-menu/powermenu.sh",
     }, 
 
     "custom/launcher": {
-        "format": "<span color='#6a92d7'>  </span>",
+        "format": "<span color='#0ebeff'>  </span>",
         "on-click": "rofi -show drun",
     },
 
@@ -179,6 +179,14 @@
             "locked": "😃",
             "unlocked": "😢"
         }
+    },
+	"custom/wireguard": {
+        "format": "<big>󰖂 {}</big>",
+        "exec": "~/.config/waybar/scripts/wireguard.sh short",
+        "on-click": "rofi -modi 'WireGuard:~/.config/waybar/scripts/wireguard-rofi.sh' -show WireGuard -theme mytheme; pkill -SIGRTMIN+6 waybar",
+        "signal": 6,
+        "interval": 60,
+        "return-type": "json"
     }
 }
 
