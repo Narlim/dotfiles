@@ -84,23 +84,23 @@ window#waybar.hidden {
 #custom-weather.showyIcyDay,
 #custom-weather.snowyIcyNight,
 #custom-weather.default {
-  padding: 0 10px;
+  padding: 0 7px;
   color: #e5e5e5;
   /* color: #bf616a; */
   border-radius: 9.5px;
-  background-color: #1f2530;
+  /* background-color: #1f2530; */
 }
 
 #window,
 #workspaces {
   margin: 0 4px;
   border-radius: 7.8px;
-  background-color: #1f2530;
+  /* background-color: #1f2530; */
 }
 
 #cpu {
   color: #24b3f8;
-  background-color: #1f2530;
+  /* background-color: #1f2530; */
 }
 
 #memory {
@@ -110,13 +110,13 @@ window#waybar.hidden {
 
 #custom-power-menu {
   border-radius: 9.5px;
-  background-color: #1b242b;
+  /* background-color: #1b242b; */
   border-radius: 7.5px;
-  padding: 0 5px;
+  padding: 0 0px;
 }
 
 #custom-launcher {
-  background-color: #1b242b;
+  /* background-color: #1b242b; */
   color: #6a92d7;
   border-radius: 7.5px;
   padding: 0 0px;

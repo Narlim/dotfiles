@@ -34,8 +34,8 @@
     },
 
     "clock": {
-        "format": "<span color='#e450bb'> </span>{:%a %b %d}",
-        "format-alt": "<span color='#e450bb'> </span>{:%I:%M %p}",
+        "format-alt": "<span color='#e450bb'> </span>{:%a %b %d}",
+        "format": "<span color='#e450bb'> </span>{:%H:%M}",
         "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
     },
 
@@ -102,7 +102,7 @@
       "format": "{icon} {capacity}%",
       "format-warning": "{icon} {capacity}%",
       "format-critical": "{icon} {capacity}%",
-      "format-charging": "<span font-family='Font Awesome 6 Free'></span> {capacity}%",
+      "format-charging": "<span>{capacity}%</span>",
       "format-plugged": " {capacity}%",
       "format-alt": "{icon} {time}",
       "format-full": " {capacity}%",
@@ -181,7 +181,7 @@
         }
     },
 	"custom/wireguard": {
-        "format": "<big>󰖂 {}</big>",
+        "format": "<span>󰖂 {}</span>",
         "exec": "~/.config/waybar/scripts/wireguard.sh short",
         "on-click": "rofi -modi 'WireGuard:~/.config/waybar/scripts/wireguard-rofi.sh' -show WireGuard -theme mytheme; pkill -SIGRTMIN+6 waybar",
         "signal": 6,
