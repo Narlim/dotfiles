@@ -27,6 +27,7 @@ export MOZ_ENABLE_WAYLAND=1
 
 # qt
 export QT_QPA_PLATFORM=wayland
+export QT_STYLE_OVERRIDE=adwaita
 # export QT_AUTO_SCREEN_SCALE_FACTOR=0
 # export QT_SCALE_FACTOR=2
 
