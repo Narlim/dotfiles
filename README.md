@@ -19,6 +19,12 @@ yay -S hyprland warbar-hyprland-git rofi-lbonn-wayland-git \
 yay -S rofi-emoji nwg-look
 ```
 
+### Ranger kitty picture preview
+```
+stow ranger
+yay -S python-pillow
+```
+
 ### Install Fonts
 
 ```
