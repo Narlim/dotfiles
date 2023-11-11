@@ -73,6 +73,7 @@ window#waybar.hidden {
 #custom-hyprPicker,
 #custom-power-menu,
 #custom-spotify,
+#custom-show-lyric-spotify,
 #custom-weather,
 #custom-weather.severe,
 #custom-weather.sunnyDay,
@@ -317,6 +318,11 @@ label:focus {
   margin: 0 4px;
   /* background-color: #1db954; */
   color: #abb2bf;
+  font-size: 15px;
+}
+
+#custom-show-lyric-spotify {
+  font-size: 15px;
 }
 
 #custom-wireguard {

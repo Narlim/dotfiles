@@ -26,15 +26,22 @@ class GlobalVariable():
         pass    
     
 
+proxies = {
+    'http': 'socks5://127.0.0.1:1080',
+    'https': 'socks5://127.0.0.1:1080'
+}
+
+
 def download_lyric(track_info):
     logger.info('Download lyric')
     payload = {'keywords': track_info}
-    resp = requests.get(url=f"{URL}/search", params=payload)
+    resp = requests.get(url=f"{URL}/search", params=payload, proxies=proxies)
     id = resp.json()['result']['songs'][0]['id']
     payload = {'id': id}
-    resp = requests.get(url=f"{URL}/lyric", params=payload)
+    resp = requests.get(url=f"{URL}/lyric", params=payload, proxies=proxies)
     lyric =  resp.json()['lrc']['lyric']
-    return lyric
+    tlyric =  resp.json()['tlyric']['lyric']
+    return lyric, tlyric
 
 
 def get_formatted_position(player):
@@ -55,10 +62,12 @@ def get_formatted_position(player):
     return formatted_time
 
 
-def on_show_lyric(player, metadata, manager, global_track_info, lyric):
+def on_show_lyric(player, metadata, manager, global_track_info, lyric, tlyric):
     logger.info('show lyric')
     lyric_dic = { item[1:6]: item.split(']')[1] \
         for item in lyric.split('\n') if item != ''}
+    tlyric_dic = { item[1:6]: item.split(']')[1] \
+        for item in tlyric.split('\n') if item != ''}
     while True:
         try:
             track_info = player.get_artist() + ' ' + player.get_title()
@@ -71,8 +80,9 @@ def on_show_lyric(player, metadata, manager, global_track_info, lyric):
             sys.stdout.flush()
             break
         oneline_lyric = lyric_dic.get(now_position)
+        oneline_tlyric = tlyric_dic.get(now_position) if tlyric_dic.get(now_position) is not None else ''
         if oneline_lyric is not None:
-            sys.stdout.write(oneline_lyric + '\n')
+            sys.stdout.write(oneline_lyric + ' ' + oneline_tlyric + '\n')
             sys.stdout.flush()
             time.sleep(1.0)
         else:
@@ -83,15 +93,16 @@ def thread_start(player, metadata, manager):
     logger.info('thread start')
     try:
         track_info = player.get_artist() + ' ' + player.get_title()
-        lyric = download_lyric(track_info)
+        lyric, tlyric = download_lyric(track_info)
         GlobalVariable.global_track_info = track_info
         global_track_info = GlobalVariable.global_track_info
     except:
         lyric = ''
+        tlyric = ''
         global_track_info = ''
         logger.error('get some variable errors')
     x = threading.Thread(target=on_show_lyric, \
-                         args=(player, metadata, manager, global_track_info, lyric), daemon=True)
+                         args=(player, metadata, manager, global_track_info, lyric, tlyric), daemon=True)
     x.start()
 
 
