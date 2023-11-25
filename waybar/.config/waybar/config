@@ -35,7 +35,7 @@
 
     "clock": {
         "format-alt": "<span color='#e450bb'> </span>{:%a %b %d}",
-        "format": "<span color='#e450bb'> </span>{:%H:%M}",
+        "format": "<span color='#e450bb'>  </span>{:%H:%M}",
         "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
     },
 
@@ -61,11 +61,11 @@
     },
 
     "network": {
-        "format-wifi": " {signalStrength}%",
-        "format-ethernet": " wired",
+        "format-wifi": "  {signalStrength}%",
+        "format-ethernet": "  wired",
         "format-disconnected": " ",
         "on-click": "bash ~/.config/waybar/scripts/rofi-wifi-menu.sh",
-        "format-disconnected": "Disconnected  ",
+        "format-disconnected": "Disconnected   ",
     },
 
     "pulseaudio": {
@@ -74,12 +74,12 @@
         "format-bluetooth-muted": " ",
         "format-muted": "󰖁 ",
         "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
+            "headphone": " ",
+            "hands-free": " ",
+            "headset": " ",
+            "phone": " ",
+            "portable": " ",
+            "car": " ",
             "default": ["", "", ""]
         },
         "on-click": "pavucontrol"
@@ -102,11 +102,11 @@
       "format": "{icon} {capacity}%",
       "format-warning": "{icon} {capacity}%",
       "format-critical": "{icon} {capacity}%",
-      "format-charging": "<span>{capacity}%</span>",
-      "format-plugged": " {capacity}%",
+      "format-charging": "<span> {capacity}%</span>",
+      "format-plugged": "  {capacity}%",
       "format-alt": "{icon} {time}",
-      "format-full": " {capacity}%",
-      "format-icons": [" ", " ", " ", " ", " "],
+      "format-full": "  {capacity}%",
+      "format-icons": ["  ", "  ", "  ", "  ", "  "],
     },
 
 //     "custom/weather": {
@@ -147,7 +147,7 @@
     },
 
     "custom/updates":{
-        "format": " {}",
+        "format": "  {}",
         "exec": "checkupdates | wc -l",
         "exec-if": "[[ $(checkupdates | wc -l) != 0 ]]",
         "interval": 300,
@@ -181,7 +181,7 @@
         }
     },
 	"custom/wireguard": {
-        "format": "<span>󰖂 {}</span>",
+        "format": "<span>󰖂  {}</span>",
         "exec": "~/.config/waybar/scripts/wireguard.sh short",
         "on-click": "rofi -modi 'WireGuard:~/.config/waybar/scripts/wireguard-rofi.sh' -show WireGuard -theme mytheme; pkill -SIGRTMIN+6 waybar",
         "signal": 6,
